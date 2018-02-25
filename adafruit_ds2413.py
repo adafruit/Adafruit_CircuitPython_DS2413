@@ -21,7 +21,7 @@
 # THE SOFTWARE.
 # pylint: disable=C0103
 """
-`adafruit_DS2413`
+`adafruit_ds2413`
 ====================================================
 
  CircuitPython driver for the DS2413 one wire 2 channel GPIO breakout.
