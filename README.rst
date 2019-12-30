@@ -10,8 +10,8 @@ Introduction
     :target: https://discord.gg/nBQh6qu
     :alt: Discord
 
-.. image:: https://travis-ci.com/adafruit/Adafruit_CircuitPython_DS2413.svg?branch=master
-    :target: https://travis-ci.com/adafruit/Adafruit_CircuitPython_DS2413
+.. image:: https://github.com/adafruit/Adafruit_CircuitPython_DS2413/workflows/Build%20CI/badge.svg
+    :target: https://github.com/adafruit/Adafruit_CircuitPython_DS2413/actions/
     :alt: Build Status
 
 CircuitPython driver for the DS2413 one wire 2 channel GPIO breakout.
