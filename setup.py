@@ -18,12 +18,12 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='adafruit-circuitpython-drv2605',
+    name='adafruit-circuitpython-ds2413',
 
     use_scm_version=True,
     setup_requires=['setuptools_scm'],
 
-    description='CircuitPython library for DRV2605 haptic motor controller.',
+    description='CircuitPython library for DS2413 haptic motor controller.',
     long_description=long_description,
     long_description_content_type='text/x-rst',
 
@@ -56,5 +56,5 @@ setup(
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    py_modules=['adafruit_drv2605'],
+    py_modules=['adafruit_ds2413'],
 )
