@@ -23,7 +23,7 @@ setup(
     use_scm_version=True,
     setup_requires=['setuptools_scm'],
 
-    description='CircuitPython library for DS2413 haptic motor controller.',
+    description='CircuitPython library for DS2413 1-Wire Dual Channel Addressable Switch.',
     long_description=long_description,
     long_description_content_type='text/x-rst',
 
