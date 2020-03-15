@@ -32,17 +32,18 @@
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_DS2413.git"
 
-from adafruit_onewire.device import OneWireDevice
 from micropython import const
+from adafruit_onewire.device import OneWireDevice
 
-_DS2413_ACCESS_READ = b'\xF5'
-_DS2413_ACCESS_WRITE = b'\x5A'
-_DS2413_ACK_SUCCESS = b'\xAA'
-_DS2413_ACK_ERROR = b'\xFF'
+_DS2413_ACCESS_READ = b"\xF5"
+_DS2413_ACCESS_WRITE = b"\x5A"
+_DS2413_ACK_SUCCESS = b"\xAA"
+_DS2413_ACK_ERROR = b"\xFF"
 INPUT = const(0)
 OUTPUT = const(1)
 
-class DS2413Pin():
+
+class DS2413Pin:
     """Class which provides interface to single DS2413 GPIO pin."""
 
     def __init__(self, number, host, direction=OUTPUT):
@@ -51,7 +52,7 @@ class DS2413Pin():
         self._number = number
         self._host = host
         self._mask = 1 << (number * 2)
-        self._direction = None      # create it, and then...
+        self._direction = None  # create it, and then...
         self.direction = direction  # set it through setter
 
     @property
@@ -96,7 +97,8 @@ class DS2413Pin():
             new |= 1 << self._number
         self._host.pio_state = new
 
-class DS2413():
+
+class DS2413:
     """Class which provides interface to DS2413 GPIO breakout."""
 
     def __init__(self, bus, address):
@@ -107,7 +109,7 @@ class DS2413():
             self._IOA = None
             self._IOB = None
         else:
-            raise RuntimeError('Incorrect family code in device address.')
+            raise RuntimeError("Incorrect family code in device address.")
 
     @property
     def IOA(self):
@@ -148,4 +150,4 @@ class DS2413():
             dev.write(self._buf, end=2)
             dev.readinto(self._buf, end=1)
         if not self._buf[0] == ord(_DS2413_ACK_SUCCESS):
-            raise RuntimeError('ACK failure.')
+            raise RuntimeError("ACK failure.")
