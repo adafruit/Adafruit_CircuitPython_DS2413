@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2021 ladyada for Adafruit Industries
+# SPDX-License-Identifier: MIT
+
 # This example shows how to directly access the DS2413. See the datasheet
 # for details. This approach is only recommended for advanced use. For typical
 # use, it is suggested to access the pins via the DS2413Pin objects. See the
