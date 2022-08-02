@@ -14,6 +14,10 @@ Introduction
     :target: https://github.com/adafruit/Adafruit_CircuitPython_DS2413/actions/
     :alt: Build Status
 
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+    :target: https://github.com/psf/black
+    :alt: Code Style: Black
+
 CircuitPython driver for the DS2413 one wire 2 channel GPIO breakout.
 
 Dependencies
