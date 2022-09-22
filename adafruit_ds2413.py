@@ -18,6 +18,14 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_DS2413.git"
 from micropython import const
 from adafruit_onewire.device import OneWireDevice
 
+try:
+    from typing import Union
+    from typing_extensions import Literal
+    from adafruit_onewire.bus import OneWireBus  # pylint: disable=ungrouped-imports
+    from microcontroller import Pin
+except ImportError:
+    pass
+
 _DS2413_ACCESS_READ = b"\xF5"
 _DS2413_ACCESS_WRITE = b"\x5A"
 _DS2413_ACK_SUCCESS = b"\xAA"
@@ -29,7 +37,9 @@ OUTPUT = const(1)
 class DS2413Pin:
     """Class which provides interface to single DS2413 GPIO pin."""
 
-    def __init__(self, number, host, direction=OUTPUT):
+    def __init__(
+        self, number: Literal[0, 1], host, direction: Literal[0, 1] = OUTPUT
+    ) -> None:
         if number not in (0, 1):
             raise ValueError("Incorrect pin number.")
         self._number = number
@@ -39,12 +49,12 @@ class DS2413Pin:
         self.direction = direction  # set it through setter
 
     @property
-    def direction(self):
+    def direction(self) -> Literal[0, 1]:
         """The direction of the pin, either INPUT or OUTPUT."""
         return self._direction
 
     @direction.setter
-    def direction(self, direction):
+    def direction(self, direction: Literal[0, 1]) -> None:
         if direction not in (INPUT, OUTPUT):
             raise ValueError("Incorrect direction setting.")
         self._direction = OUTPUT
@@ -52,7 +62,7 @@ class DS2413Pin:
         self._direction = direction
 
     @property
-    def value(self):
+    def value(self) -> bool:
         """The pin state if configured as INPUT. The output latch state
         if configured as OUTPUT. True is HIGH/ON, False is LOW/OFF."""
         # return Pin State if configured for INPUT
@@ -61,7 +71,7 @@ class DS2413Pin:
         return not self._host.pio_state & (self._mask << self._direction)
 
     @value.setter
-    def value(self, state):
+    def value(self, state: Union[bool, Literal[0, 1]]) -> None:
         # This only makes sense if the pin is configured for OUTPUT.
         if self._direction == INPUT:
             raise RuntimeError("Can't set value when pin is set to input.")
@@ -84,7 +94,7 @@ class DS2413Pin:
 class DS2413:
     """Class which provides interface to DS2413 GPIO breakout."""
 
-    def __init__(self, bus, address):
+    def __init__(self, bus: OneWireBus, address: int) -> None:
         if address.family_code == 0x3A:
             self._address = address
             self._device = OneWireDevice(bus, address)
@@ -95,35 +105,35 @@ class DS2413:
             raise RuntimeError("Incorrect family code in device address.")
 
     @property
-    def IOA(self):
+    def IOA(self) -> Pin:
         """The pin object for channel A."""
         if self._IOA is None:
             self._IOA = DS2413Pin(0, self)
         return self._IOA
 
     @property
-    def IOB(self):
+    def IOB(self) -> Pin:
         """The pin object for channel B."""
         if self._IOB is None:
             self._IOB = DS2413Pin(1, self)
         return self._IOB
 
     @property
-    def pio_state(self):
+    def pio_state(self) -> int:
         """The state of both PIO channels."""
         return self._read_status()
 
     @pio_state.setter
-    def pio_state(self, value):
+    def pio_state(self, value: int) -> None:
         return self._write_latches(value)
 
-    def _read_status(self):
+    def _read_status(self) -> int:
         with self._device as dev:
             dev.write(_DS2413_ACCESS_READ)
             dev.readinto(self._buf, end=1)
         return self._buf[0]
 
-    def _write_latches(self, value):
+    def _write_latches(self, value: int) -> None:
         # top six bits must be 1
         value |= 0xFC
         self._buf[0] = value
