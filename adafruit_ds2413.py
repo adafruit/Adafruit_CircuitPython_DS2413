@@ -19,10 +19,9 @@ from micropython import const
 from adafruit_onewire.device import OneWireDevice
 
 try:
-    from typing import Union
+    import typing  # pylint: disable=unused-import
     from typing_extensions import Literal
     from adafruit_onewire.bus import OneWireBus  # pylint: disable=ungrouped-imports
-    from microcontroller import Pin
 except ImportError:
     pass
 
@@ -71,7 +70,7 @@ class DS2413Pin:
         return not self._host.pio_state & (self._mask << self._direction)
 
     @value.setter
-    def value(self, state: Union[bool, Literal[0, 1]]) -> None:
+    def value(self, state: bool) -> None:
         # This only makes sense if the pin is configured for OUTPUT.
         if self._direction == INPUT:
             raise RuntimeError("Can't set value when pin is set to input.")
@@ -105,14 +104,14 @@ class DS2413:
             raise RuntimeError("Incorrect family code in device address.")
 
     @property
-    def IOA(self) -> Pin:
+    def IOA(self) -> DS2413Pin:
         """The pin object for channel A."""
         if self._IOA is None:
             self._IOA = DS2413Pin(0, self)
         return self._IOA
 
     @property
-    def IOB(self) -> Pin:
+    def IOB(self) -> DS2413Pin:
         """The pin object for channel B."""
         if self._IOB is None:
             self._IOB = DS2413Pin(1, self)
