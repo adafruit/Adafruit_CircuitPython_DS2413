@@ -6,8 +6,10 @@
 # button is attached to IOB. See the datasheet for details about how to
 # interface the external hardware (it is different than most Arduino examples).
 import time
+
 import board
 from adafruit_onewire.bus import OneWireBus
+
 import adafruit_ds2413
 
 # Create OneWire bus
