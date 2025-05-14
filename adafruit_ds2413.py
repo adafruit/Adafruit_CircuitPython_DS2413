@@ -1,7 +1,6 @@
 # SPDX-FileCopyrightText: 2017 Carter Nelson for Adafruit Industries
 #
 # SPDX-License-Identifier: MIT
-# pylint: disable=C0103
 
 """
 `adafruit_ds2413`
@@ -15,20 +14,21 @@
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_DS2413.git"
 
-from micropython import const
 from adafruit_onewire.device import OneWireDevice
+from micropython import const
 
 try:
-    import typing  # pylint: disable=unused-import
+    import typing
+
+    from adafruit_onewire.bus import OneWireBus
     from typing_extensions import Literal
-    from adafruit_onewire.bus import OneWireBus  # pylint: disable=ungrouped-imports
 except ImportError:
     pass
 
-_DS2413_ACCESS_READ = b"\xF5"
-_DS2413_ACCESS_WRITE = b"\x5A"
-_DS2413_ACK_SUCCESS = b"\xAA"
-_DS2413_ACK_ERROR = b"\xFF"
+_DS2413_ACCESS_READ = b"\xf5"
+_DS2413_ACCESS_WRITE = b"\x5a"
+_DS2413_ACK_SUCCESS = b"\xaa"
+_DS2413_ACK_ERROR = b"\xff"
 INPUT = const(0)
 OUTPUT = const(1)
 
@@ -36,10 +36,8 @@ OUTPUT = const(1)
 class DS2413Pin:
     """Class which provides interface to single DS2413 GPIO pin."""
 
-    def __init__(
-        self, number: Literal[0, 1], host, direction: Literal[0, 1] = OUTPUT
-    ) -> None:
-        if number not in (0, 1):
+    def __init__(self, number: Literal[0, 1], host, direction: Literal[0, 1] = OUTPUT) -> None:
+        if number not in {0, 1}:
             raise ValueError("Incorrect pin number.")
         self._number = number
         self._host = host
@@ -54,7 +52,7 @@ class DS2413Pin:
 
     @direction.setter
     def direction(self, direction: Literal[0, 1]) -> None:
-        if direction not in (INPUT, OUTPUT):
+        if direction not in {INPUT, OUTPUT}:
             raise ValueError("Incorrect direction setting.")
         self._direction = OUTPUT
         self.value = False

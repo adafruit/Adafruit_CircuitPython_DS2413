@@ -7,6 +7,7 @@
 # simple.py example.
 import board
 from adafruit_onewire.bus import OneWireBus
+
 import adafruit_ds2413
 
 # Create OneWire bus
@@ -17,7 +18,7 @@ ds = adafruit_ds2413.DS2413(ow_bus, ow_bus.scan()[0])
 
 # Get the PIO logical status and report it together with the state of the
 # PIO Output Latch
-print("0b{:08b}".format(ds.pio_state))
+print(f"0b{ds.pio_state:08b}")
 
 # Control the output transistors. (ON = 0, OFF = 1)
 # Turn off both transisotrs
